@@ -1,3 +1,3 @@
 # oim3640_finalproject
 
-# This is term project for OIM3640-01.
+This is term project for OIM3640-01.
