@@ -1,3 +1,3 @@
-# oim3640_finalproject
+Names: Angeline Cho, K Yabe
 
-This is term project for OIM3640-01.
+For this final project of OIM3640, we are going to create a battle ship game for 
