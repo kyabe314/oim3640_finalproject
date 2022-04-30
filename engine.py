@@ -1,4 +1,7 @@
 import random
+from matplotlib.pyplot import hist
+
+from numpy import square
 
 class Ship:
     def __init__(self, size):
@@ -75,6 +78,7 @@ class Game:
         self.computer_turn = True if not self.human1 else False
         self.over = False
         self.result = None
+        self.n_shots = 0
 
     def make_move(self, i):
         player = self.player1 if self.player1_turn else self.player2
@@ -111,3 +115,60 @@ class Game:
         # change the active player
         if not hit:
             self.player1_turn = not self.player1_turn
+
+            # switch between human and computer turns
+            if (self.human1 and not self.human2) or (not self.human1 and self.human2):
+                self.computer_turn = not self.computer_turn
+
+        # add to the number of shots fired
+        self.n_shots += 1
+
+    
+    def rand_ai(self):
+        search = self.player1.search if self.player1_turn else self.player2.search
+        unknown = [i for i, square in enumerate(search) if square == "U"]
+        if len(unknown) > 0:
+            random_index = random.choice(unknown)
+            self.make_move(random_index)
+
+
+    def basic_ai(self):
+
+        # setup
+        search = self.player1.search if self.player1_turn else self.player2.search
+        unknown = [i for i, square in enumerate(search) if square == "U"]
+        hits = [i for i, square in enumerate(search) if square == "H"]
+
+        # search in neighborhood of hits
+        unknown_with_neighbors1 = []
+        unknown_with_neighbors2 = []
+        for u in unknown:
+            if u + 1 in hits or u - 1 in hits or u - 10 in hits or u + 10 in hits:
+                unknown_with_neighbors1.append(u)
+            if u + 2 in hits or u - 2 in hits or u - 20 in hits or u + 20 in hits:
+                unknown_with_neighbors2.append(u)
+
+        # pick "U" square with directly and level 2 neighbor both marked as "H"
+        for u in unknown:
+            if u in unknown_with_neighbors1 and u in unknown_with_neighbors2:
+                self.make_move(u)
+                return
+
+        # pick "U" square that has a neighbor marked as "H"
+        if len(unknown_with_neighbors1) > 0:
+            self.make_move(random.choice(unknown_with_neighbors1))
+            return
+
+        # checker board pattern
+        checker_board = []
+        for u in unknown:
+            row = u // 10
+            col = u % 10
+            if (row + col) % 2 == 0:
+                checker_board.append(u)
+        if len(checker_board) > 0:
+            self.make_move(random.choice(checker_board))
+            return
+
+        # random move
+        self.random_ai()
