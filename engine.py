@@ -60,7 +60,9 @@ class Player:
                     placed = True
 
     def show_ships(self):
-        indexes = []
+        indexes = ['-' if i not in self.indexes else 'X' for i in range(100)]
+        for row in range(10):
+            print(' '.join(indexes[(row-1)*10:row*10]))
 
 p = Player()
-print(p.indexes)
+print(p.show_ships)
