@@ -42,7 +42,7 @@ class Player:
                         break
 
                     # ships cannot behave like the 'snake'
-                    new_row = 1 // 10
+                    new_row = i // 10
                     new_col = i % 10
                     if new_row != ship.row and new_col != ship.col:
                         possible = False
@@ -66,19 +66,25 @@ class Player:
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, human1, human2):
+        self.human1 = human1
+        self.human2 = human2
         self.player1 = Player()
         self.player2 = Player()
         self.player1_turn = True
+        self.computer_turn = True if not self.human1 else False
         self.over = False
+        self.result = None
 
     def make_move(self, i):
         player = self.player1 if self.player1_turn else self.player2
         opponent = self.player2 if self.player1_turn else self.player1
+        hit = False
 
         # set miss "M" or hit 'H'
         if i in opponent.indexes:
             player.search[i] = "H"
+            hit = True
 
             # check if ship is suck ('S')
             for ship in opponent.ships:
@@ -93,3 +99,15 @@ class Game:
 
         else:
             player.search[i] = "M"
+
+        # check if game-over
+        game_over = True
+        for i in opponent.indexes:
+            if player.search[i] == "U":
+                game_over = False
+        self.over = game_over
+        self.result = 1 if self.player1_turn else 2
+
+        # change the active player
+        if not hit:
+            self.player1_turn = not self.player1_turn
