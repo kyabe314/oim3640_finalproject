@@ -1,4 +1,4 @@
-from engine import Player, Game
+from code.engine import Player, Game
 
 
 # setting up pygame
