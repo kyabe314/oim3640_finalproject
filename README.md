@@ -15,3 +15,9 @@ For this final project of OIM3640, we are going to create a battle ship game for
 ## 3. Technical Architecture
 
 We are planning to create the game through employing multiple functions with python. We will be writing functions to create the board, which is an n x n matrices (we haven’t exactly decided on the size yet). We will also create a function that can help us put random ships of random size on random locations of the board. We may need to create multiple functions to assist it, for example get_column and get_row. We will also make a file to play and run games, with functions that allow us to have user input on guessing the coordinates of the ships. If the ship is hit, then the ship on the coordinate will be replaced with an “x”, displaying a message showing the user that the ship is hit. While if the player missed, then it will simply present a message telling the player that they missed the ship. If the ships are all hit, then the player wins, if the ships are not hit within the number of given moves, then the player loses the game. There will be other smaller functions to assist the game.
+
+## How to run the code?
+
+To play the game of Battleship, simply run battleship1.py and an external screen will pop up. You will also need to install pygame before hand with:
+    pip install pygame
+or see [here](https://www.pygame.org/wiki/GettingStarted).

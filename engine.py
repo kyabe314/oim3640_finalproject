@@ -4,6 +4,9 @@ from matplotlib.pyplot import hist
 from numpy import square
 
 class Ship:
+    '''
+    Ship class.
+    '''
     def __init__(self, size):
         self.row = random.randrange(0, 9)
         self.col = random.randrange(0, 9)
@@ -20,6 +23,9 @@ class Ship:
 
 
 class Player:
+    '''
+    Player class.
+    '''
     def __init__(self):
         self.ships = []
         self.search = ['U' for i in range(100)] # "U" for unknown
@@ -28,6 +34,9 @@ class Player:
         self.indexes = [index for sublist in list_of_lists for index in sublist]
 
     def place_ships(self, sizes):
+        '''
+        Taking the sizes needed for the ships and place them on the grid according to some rules.
+        '''
         for size in sizes:
             placed = False
             while not placed:
@@ -44,7 +53,7 @@ class Player:
                         possible = False
                         break
 
-                    # ships cannot behave like the 'snake'
+                    # ships cannot behave like the 'snake' credit: Youtube videos
                     new_row = i // 10
                     new_col = i % 10
                     if new_row != ship.row and new_col != ship.col:
@@ -69,6 +78,9 @@ class Player:
 
 
 class Game:
+    '''
+    Game class.
+    '''
     def __init__(self, human1, human2):
         self.human1 = human1
         self.human2 = human2
@@ -81,6 +93,9 @@ class Game:
         self.n_shots = 0
 
     def make_move(self, i):
+        '''
+        Exchanging turns for computer player and player 1.
+        '''
         player = self.player1 if self.player1_turn else self.player2
         opponent = self.player2 if self.player1_turn else self.player1
         hit = False
@@ -125,6 +140,9 @@ class Game:
 
     
     def rand_ai(self):
+        '''
+        Computer player that shooting randomly. Beginner level of computer player.
+        '''
         search = self.player1.search if self.player1_turn else self.player2.search
         unknown = [i for i, square in enumerate(search) if square == "U"]
         if len(unknown) > 0:
@@ -132,8 +150,11 @@ class Game:
             self.make_move(random_index)
 
 
+    # credit: Youtube videos
     def basic_ai(self):
-
+        '''
+        Computer player that can search near the "hits" and seach through the grid diagonally.
+        '''
         # setup
         search = self.player1.search if self.player1_turn else self.player2.search
         unknown = [i for i, square in enumerate(search) if square == "U"]

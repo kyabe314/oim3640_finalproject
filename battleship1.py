@@ -31,6 +31,9 @@ COLORS = {"U": GREY, "M": BLUE, "H": ORANGE, "S": RED}
 
 # function to draw a grid
 def draw_grid(player, left=0, top=0, search=False):
+    '''
+    Draw a playing grid for players. It takes the margin from the left and the top.
+    '''
     for i in range(100):
         x = left + i % 10 * SQ_SIZE
         y = top + i // 10 * SQ_SIZE
@@ -42,6 +45,9 @@ def draw_grid(player, left=0, top=0, search=False):
             pygame.draw.circle(SCREEN, COLORS[player.search[i]], (x, y), radius=SQ_SIZE//4)
 
 def draw_ai_grid(player, left=0, top=0, search=False):
+    '''
+    Drawing an invisible grid for the computer.
+    '''
     for i in range(100):
         x = left + i % 10 * SQ_SIZE
         y = top + i // 10 * SQ_SIZE
@@ -54,6 +60,9 @@ def draw_ai_grid(player, left=0, top=0, search=False):
 
 # function to draw ships onto the position grids
 def draw_ships(player, left=0, top=0):
+    '''
+    Taking the parameters of the grid and place the ships.
+    '''
     for ship in player.ships:
         x = left + ship.col * SQ_SIZE + INDENT
         y = top + ship.row * SQ_SIZE + INDENT
@@ -67,6 +76,9 @@ def draw_ships(player, left=0, top=0):
         pygame.draw.rect(SCREEN, GREEN, rectangle, border_radius=10)
 
 def draw_ai_ships(player, left=0, top=0):
+    '''
+    Drawing invisible enemies ships.
+    '''
     for ship in player.ships:
         x = left + ship.col * SQ_SIZE + INDENT
         y = top + ship.row * SQ_SIZE + INDENT
@@ -81,7 +93,7 @@ def draw_ai_ships(player, left=0, top=0):
 
 game = Game(HUMAN1, HUMAN2)
 
-# pygame loop
+# pygame loop credit: Youtube videos
 animating = True
 pausing = False
 while animating:
